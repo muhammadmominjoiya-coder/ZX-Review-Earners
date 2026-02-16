@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZX Creations | Final Gaming Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Rajdhani', sans-serif; background-color: #05010d; color: white; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .gaming-gradient { background: linear-gradient(135deg, #bc13fe 0%, #7a11f7 100%); }
+        .hidden { display: none; }
+        .bg-main { background: linear-gradient(rgba(5,1,13,0.8), rgba(5,1,13,0.9)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2070'); background-size: cover; background-attachment: fixed; }
+        .terminal-glow { border: 1px solid #bc13fe; box-shadow: 0 0 20px rgba(188, 19, 254, 0.2); }
+        .star-active { color: #facc15 !important; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .live-dot { height: 8px; width: 8px; background-color: #00ff00; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+    </style>
+</head>
+<body>
+
+    <div id="page-landing" class="min-h-screen bg-main flex flex-col items-center">
+        <div class="w-full p-6 flex justify-between items-center max-w-6xl">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-gamepad text-3xl text-purple-500"></i>
+                <span class="font-bold text-xl tracking-tighter uppercase italic">ZX CREATIONS</span>
+            </div>
+            <button onclick="openAuth('login')" class="border border-purple-500 px-6 py-2 rounded-full font-bold hover:bg-purple-500 transition-all uppercase text-xs">Login</button>
+        </div>
+
+        <div class="flex-1 flex flex-col items-center justify-center text-center px-6 mt-6">
+            <h1 class="text-6xl md:text-8xl font-bold tracking-widest mb-4 uppercase italic text-white" style="text-shadow: 0 0 20px #bc13fe;">ZX PAYER</h1>
+            <button onclick="openAuth('signup')" class="gaming-gradient px-12 py-4 rounded-full font-bold text-xl shadow-lg hover:scale-105 transition-all mb-10 uppercase tracking-widest">Get Started</button>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 w-full max-w-4xl px-4 text-left">
+                <div class="flex items-center gap-4 glass p-6 rounded-3xl border-l-4 border-blue-500">
+                    <i class="fas fa-users text-3xl text-blue-400"></i>
+                    <div><h4 class="text-2xl font-bold">25K+</h4><p class="text-[10px] text-gray-400 uppercase font-bold">Daily Active Users</p></div>
+                </div>
+                <div class="flex items-center gap-4 glass p-6 rounded-3xl border-l-4 border-green-500">
+                    <i class="fas fa-hand-holding-usd text-3xl text-green-400"></i>
+                    <div><h4 class="text-2xl font-bold">$500K+</h4><p class="text-[10px] text-gray-400 uppercase font-bold">Total Withdrawals</p></div>
+                </div>
+            </div>
+
+            <div class="max-w-4xl glass p-8 rounded-[40px] text-left border border-white/10 mb-10">
+                <h2 class="text-2xl font-bold text-purple-500 mb-3 uppercase italic">Our History (Since 2011)</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">ZX Creations started in 2011 as a small indie studio focused on vehicle physics. Today, we are a leading name in mobile simulation. Our ZX Payer terminal is designed to directly reward our community for their feedback on our latest 7 game engines.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-auth" class="hidden min-h-screen flex items-center justify-center p-6 bg-[#05010d]">
+        <div class="glass p-8 rounded-[40px] w-full max-w-md border border-purple-500/30 relative text-center terminal-glow">
+            <button onclick="nav('page-landing')" class="absolute top-6 left-6 text-gray-500 hover:text-white uppercase text-xs font-bold"><i class="fas fa-arrow-left"></i> Back</button>
+            <h2 id="auth-title" class="text-3xl font-bold text-yellow-400 mb-8 mt-6 uppercase tracking-widest italic">Signup</h2>
+            <div class="space-y-4 text-left">
+                <div id="name-fields" class="grid grid-cols-2 gap-2">
+                    <input type="text" id="fname" placeholder="First Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-white outline-none">
+                    <input type="text" id="lname" placeholder="Last Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-white outline-none">
+                </div>
+                <input type="email" id="u-email" placeholder="Gmail Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-white outline-none">
+                <input type="password" id="u-pass" placeholder="Password" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-white outline-none">
+                <button onclick="handleAuth()" id="auth-btn" class="gaming-gradient w-full py-4 rounded-2xl font-bold uppercase shadow-lg">Action</button>
+                <button onclick="toggleAuthMode()" id="auth-switch-btn" class="text-center w-full text-[10px] text-gray-500 uppercase mt-4 block">New? <span class="text-purple-500 font-bold">Signup</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-dash" class="hidden min-h-screen flex flex-col">
+        <div class="p-5 flex justify-between items-center glass border-b border-white/5 sticky top-0 z-50">
+            <button onclick="toggleSidebar()" class="text-2xl text-purple-500"><i class="fas fa-bars"></i></button>
+            <h1 class="font-bold text-white tracking-[0.2em] uppercase text-[10px]">ZX TERMINAL <span class="live-dot ml-1"></span></h1>
+            <span class="text-yellow-400 font-bold text-sm">$<span id="bal-top">0.00</span></span>
+        </div>
+
+        <div id="sidebar" class="fixed inset-y-0 left-[-300px] w-72 h-full bg-[#080214] z-[100] transition-all duration-300 border-r border-purple-500/30 p-10 space-y-6">
+            <div class="flex flex-col items-center mb-10">
+                <div class="w-20 h-20 gaming-gradient rounded-full flex items-center justify-center text-3xl font-bold border-4 border-white/20 mb-2 shadow-xl" id="sidebar-icon">?</div>
+                <p class="text-xs font-bold uppercase text-purple-400" id="sidebar-name">User</p>
+            </div>
+            <button onclick="tab('sec-home')" class="block w-full text-left text-gray-400 font-bold uppercase text-xs"><i class="fas fa-home mr-3 text-purple-500"></i> Home</button>
+            <button onclick="tab('sec-games')" class="block w-full text-left text-gray-400 font-bold uppercase text-xs"><i class="fas fa-gamepad mr-3 text-purple-500"></i> Missions</button>
+            <button onclick="tab('sec-ranks')" class="block w-full text-left text-gray-400 font-bold uppercase text-xs"><i class="fas fa-trophy mr-3 text-purple-500"></i> Leaderboard</button>
+            <button onclick="tab('sec-earn-guide')" class="block w-full text-left text-gray-400 font-bold uppercase text-xs"><i class="fas fa-lightbulb mr-3 text-purple-500"></i> How To Earn</button>
+            <button onclick="tab('sec-refer')" class="block w-full text-left text-gray-400 font-bold uppercase text-xs"><i class="fas fa-share-alt mr-3 text-purple-500"></i> Referral</button>
+            <button onclick="tab('sec-contact')" class="block w-full text-left text-gray-400 font-bold uppercase text-xs"><i class="fas fa-envelope mr-3 text-purple-500"></i> Contact Us</button>
+            <button onclick="logout()" class="block w-full text-left text-red-500 mt-10 font-bold uppercase text-xs"><i class="fas fa-power-off mr-3"></i> Shutdown</button>
+        </div>
+
+        <div class="flex-1 p-6 pb-24 overflow-y-auto">
+            <div id="sec-home" class="tab-content space-y-6">
+                <div class="flex items-center gap-4 glass p-6 rounded-[35px] border-l-4 border-purple-600">
+                    <div class="w-16 h-16 gaming-gradient rounded-full flex items-center justify-center text-2xl font-bold" id="home-profile-icon">?</div>
+                    <div><p class="text-[10px] text-gray-500 font-bold uppercase">Gamer Profile</p><h4 class="text-xl font-bold uppercase italic" id="home-user-name">Gamer</h4></div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass p-6 rounded-[30px] text-center border-b-2 border-yellow-500">
+                        <p class="text-[10px] text-gray-400 uppercase font-bold">Total Earning</p>
+                        <h3 class="text-3xl font-bold text-yellow-400">$<span id="bal-main">0.00</span></h3>
+                    </div>
+                    <div class="glass p-6 rounded-[30px] text-center border-b-2 border-blue-500">
+                        <p class="text-[10px] text-gray-400 uppercase font-bold">Reviews Given</p>
+                        <h3 class="text-3xl font-bold text-white"><span id="review-count">0</span></h3>
+                    </div>
+                </div>
+                <div class="glass p-6 rounded-[30px] border border-white/5 space-y-3">
+                    <h4 class="text-xs font-bold text-purple-500 uppercase italic"><i class="fas fa-bullhorn mr-2"></i> Professional Tips</h4>
+                    <ul class="text-[10px] text-gray-400 space-y-2 font-bold uppercase">
+                        <li>• Use same email for Play Store as ZX Payer.</li>
+                        <li>• Play 5 levels to make review authentic.</li>
+                        <li>• Withdrawal threshold: $200.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="sec-games" class="tab-content hidden space-y-4">
+                <h2 class="text-xl font-bold uppercase italic text-purple-500">Active Missions</h2>
+                <div class="grid grid-cols-1 gap-3">
+                    <div onclick="openMission('FPS Gun Strike', 'https://play.google.com/store/apps/details?id=com.zxc.fps.gun.games.gun.shooting.games')" class="glass p-4 rounded-3xl flex items-center gap-4 border border-white/5">
+                        <div class="w-12 h-12 bg-purple-900 rounded-xl flex items-center justify-center font-bold text-xs">FPS</div>
+                        <div class="flex-1"><h4 class="font-bold text-xs uppercase">FPS Gun Shooting</h4><p class="text-[9px] text-purple-400">$5.00 REWARD</p></div>
+                    </div>
+                    <div onclick="openMission('Van Driving Sim', 'https://play.google.com/store/apps/details?id=com.zxc.van.simulator.van.driving.van.games')" class="glass p-4 rounded-3xl flex items-center gap-4 border border-white/5">
+                        <div class="w-12 h-12 bg-blue-900 rounded-xl flex items-center justify-center font-bold text-xs">VAN</div>
+                        <div class="flex-1"><h4 class="font-bold text-xs uppercase">Van Simulator</h4><p class="text-[9px] text-purple-400">$5.00 REWARD</p></div>
+                    </div>
+                    <div onclick="openMission('Police Car Chase', 'https://play.google.com/store/apps/details?id=com.zxc.police.car.chase.cop.game')" class="glass p-4 rounded-3xl flex items-center gap-4 border border-white/5">
+                        <div class="w-12 h-12 bg-red-900 rounded-xl flex items-center justify-center font-bold text-xs">COP</div>
+                        <div class="flex-1"><h4 class="font-bold text-xs uppercase">Police Chase</h4><p class="text-[9px] text-purple-400">$5.00 REWARD</p></div>
+                    </div>
+                    <div onclick="openMission('Offroad Bus Sim', 'https://play.google.com/store/apps/details?id=com.zxc.offroad.bus.game.bus.simulator')" class="glass p-4 rounded-3xl flex items-center gap-4 border border-white/5">
+                        <div class="w-12 h-12 bg-green-900 rounded-xl flex items-center justify-center font-bold text-xs">BUS</div>
+                        <div class="flex-1"><h4 class="font-bold text-xs uppercase">Offroad Bus</h4><p class="text-[9px] text-purple-400">$5.00 REWARD</p></div>
+                    </div>
+                    <div onclick="openMission('School Driving', 'https://play.google.com/store/apps/details?id=com.zxc.school.car.driving.simulator.games')" class="glass p-4 rounded-3xl flex items-center gap-4 border border-white/5">
+                        <div class="w-12 h-12 bg-yellow-900 rounded-xl flex items-center justify-center font-bold text-xs">CAR</div>
+                        <div class="flex-1"><h4 class="font-bold text-xs uppercase">School Car Driving</h4><p class="text-[9px] text-purple-400">$5.00 REWARD</p></div>
+                    </div>
+                    <div onclick="openMission('Car Parking School', 'https://play.google.com/store/apps/details?id=com.zxc.car.driving.school.simulator.car.parking')" class="glass p-4 rounded-3xl flex items-center gap-4 border border-white/5">
+                        <div class="w-12 h-12 bg-pink-900 rounded-xl flex items-center justify-center font-bold text-xs">PRK</div>
+                        <div class="flex-1"><h4 class="font-bold text-xs uppercase">Car Parking</h4><p class="text-[9px] text-purple-400">$5.00 REWARD</p></div>
+                    </div>
+                    <div onclick="openMission('City Bus Driving', 'https://play.google.com/store/apps/details?id=com.zxc.city.bus.driving.game.bus.simulator.game')" class="glass p-4 rounded-3xl flex items-center gap-4 border border-white/5">
+                        <div class="w-12 h-12 bg-indigo-900 rounded-xl flex items-center justify-center font-bold text-xs">CITY</div>
+                        <div class="flex-1"><h4 class="font-bold text-xs uppercase">City Bus Sim</h4><p class="text-[9px] text-purple-400">$5.00 REWARD</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sec-mission-detail" class="tab-content hidden space-y-6 text-center">
+                <button onclick="tab('sec-games')" class="text-gray-500 uppercase text-[10px] font-bold"><i class="fas fa-arrow-left"></i> Back</button>
+                <div class="glass p-6 rounded-[40px] border border-purple-500/30 space-y-5">
+                    <h2 id="m-title" class="text-2xl font-bold uppercase italic text-white">Game</h2>
+                    <a id="m-link" href="#" target="_blank" class="block gaming-gradient py-4 rounded-2xl font-bold uppercase">Go to Play Store</a>
+                    <div class="text-left bg-white/5 p-4 rounded-2xl border border-white/10">
+                        <p class="text-[10px] text-gray-400 font-bold uppercase leading-relaxed">Play 5 levels, give 5-star rating & write positive review. Then upload 6 screenshots of gameplay and review proof.</p>
+                    </div>
+                    <div class="flex justify-center gap-2 text-xl text-gray-700">
+                        <i class="fas fa-star cursor-pointer rating-star" onclick="setRating(1)"></i>
+                        <i class="fas fa-star cursor-pointer rating-star" onclick="setRating(2)"></i>
+                        <i class="fas fa-star cursor-pointer rating-star" onclick="setRating(3)"></i>
+                        <i class="fas fa-star cursor-pointer rating-star" onclick="setRating(4)"></i>
+                        <i class="fas fa-star cursor-pointer rating-star" onclick="setRating(5)"></i>
+                    </div>
+                    <textarea id="m-review-text" placeholder="Write positive review here..." class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl h-24 text-white text-xs outline-none"></textarea>
+                    <input type="file" id="ss-input" multiple class="text-[10px] font-bold">
+                    <button onclick="claimReward()" class="w-full bg-white text-black py-4 rounded-2xl font-bold uppercase">Submit Mission</button>
+                </div>
+            </div>
+
+            <div id="sec-ranks" class="tab-content hidden space-y-4">
+                <h2 class="text-xl font-bold text-purple-500 uppercase italic text-center">Leaderboard</h2>
+                <div class="glass rounded-3xl p-4 text-[11px] font-bold uppercase">
+                    <div class="grid grid-cols-4 border-b border-white/10 p-2 mb-2 text-gray-500"><span>Rank</span><span>User</span><span>Country</span><span>Earned</span></div>
+                    <div class="space-y-2" id="rank-list">
+                        <div class="grid grid-cols-4 bg-white/5 p-3 rounded-xl"><span>#1</span><span>Momin J.</span><span>PK</span><span class="text-yellow-400">$12,450</span></div>
+                        <div class="grid grid-cols-4 bg-white/5 p-3 rounded-xl"><span>#2</span><span>Rohit S.</span><span>IN</span><span class="text-yellow-400">$10,100</span></div>
+                        <div class="grid grid-cols-4 bg-white/5 p-3 rounded-xl"><span>#3</span><span>John D.</span><span>USA</span><span class="text-yellow-400">$9,850</span></div>
+                        <div class="grid grid-cols-4 bg-white/5 p-3 rounded-xl"><span>#4</span><span>Ali H.</span><span>PK</span><span class="text-yellow-400">$8,200</span></div>
+                        <div class="grid grid-cols-4 bg-white/5 p-3 rounded-xl"><span>#5</span><span>Arjun K.</span><span>IN</span><span class="text-yellow-400">$7,400</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sec-earn-guide" class="tab-content hidden space-y-4">
+                <h2 class="text-xl font-bold text-purple-500 uppercase italic">How To Earn</h2>
+                <div class="space-y-3">
+                    <div class="glass p-5 rounded-2xl"><h4 class="text-white text-xs font-bold uppercase">Step 1: Choose Mission</h4><p class="text-[10px] text-gray-400 font-bold uppercase">Select any game from mission section.</p></div>
+                    <div class="glass p-5 rounded-2xl"><h4 class="text-white text-xs font-bold uppercase">Step 2: Install & Review</h4><p class="text-[10px] text-gray-400 font-bold uppercase">Play 5 levels and rate 5-star on PlayStore.</p></div>
+                    <div class="glass p-5 rounded-2xl"><h4 class="text-white text-xs font-bold uppercase">Step 3: Upload Proof</h4><p class="text-[10px] text-gray-400 font-bold uppercase">Upload 6 screens to get $5.00 instantly.</p></div>
+                </div>
+            </div>
+
+            <div id="sec-refer" class="tab-content hidden text-center space-y-6">
+                <h2 class="text-2xl font-bold text-yellow-400 uppercase italic">Referral</h2>
+                <div class="glass p-8 rounded-[40px] space-y-4 border border-purple-500/30">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase">Share this link and earn $10 on every invite!</p>
+                    <input id="ref-link" type="text" readonly class="w-full bg-white/5 p-4 rounded-2xl text-[10px] text-purple-400 font-bold border border-white/10" value="https://muhammadmominjoiya-coder.github.io/cautious-waffle/">
+                    <button onclick="copyRef()" class="gaming-gradient w-full py-4 rounded-2xl font-bold uppercase shadow-lg">Copy Referral Link</button>
+                </div>
+            </div>
+
+            <div id="sec-contact" class="tab-content hidden text-center space-y-6">
+                <h2 class="text-2xl font-bold text-purple-500 uppercase italic">Contact Support</h2>
+                <div class="glass p-8 rounded-[40px] space-y-4">
+                    <textarea id="con-msg" placeholder="Write your problem here..." class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl h-32 text-white outline-none"></textarea>
+                    <button onclick="submitContact()" class="gaming-gradient w-full py-4 rounded-2xl font-bold uppercase">Send Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let balance = 0; let reviews = 0; let currentRating = 0; let isLogin = false;
+
+        function nav(id) { document.querySelectorAll('#page-landing, #page-auth, #page-dash').forEach(p => p.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
+        function openAuth(m) { nav('page-auth'); isLogin = (m === 'login'); updateAuthUI(); }
+        function toggleAuthMode() { isLogin = !isLogin; updateAuthUI(); }
+        
+        function updateAuthUI() {
+            document.getElementById('auth-title').innerText = isLogin ? "Authenticate" : "Create Profile";
+            document.getElementById('name-fields').classList.toggle('hidden', isLogin);
+        }
+
+        function handleAuth() {
+            const email = document.getElementById('u-email').value;
+            const pass = document.getElementById('u-pass').value;
+            const name = document.getElementById('fname').value || "Gamer";
+
+            if (isLogin) {
+                if (email === localStorage.getItem('u_mail') && pass === localStorage.getItem('u_pass')) { enterDash(); } 
+                else { alert("Invalid Credentials!"); }
+            } else {
+                localStorage.setItem('u_mail', email);
+                localStorage.setItem('u_pass', pass);
+                localStorage.setItem('u_name', name);
+                enterDash();
+            }
+        }
+
+        function enterDash() {
+            const name = localStorage.getItem('u_name');
+            nav('page-dash');
+            document.getElementById('sidebar-name').innerText = name;
+            document.getElementById('home-user-name').innerText = name;
+            document.getElementById('sidebar-icon').innerText = name.charAt(0).toUpperCase();
+            document.getElementById('home-profile-icon').innerText = name.charAt(0).toUpperCase();
+            updateUI();
+        }
+
+        function toggleSidebar() { const sb = document.getElementById('sidebar'); sb.style.left = (sb.style.left === '0px') ? '-300px' : '0px'; }
+        function tab(id) { document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); document.getElementById('sidebar').style.left = '-300px'; }
+
+        function openMission(title, link) {
+            tab('sec-mission-detail');
+            document.getElementById('m-title').innerText = title;
+            document.getElementById('m-link').href = link;
+            setRating(0);
+        }
+
+        function setRating(r) {
+            currentRating = r;
+            const stars = document.querySelectorAll('.rating-star');
+            stars.forEach((s, i) => s.classList.toggle('star-active', i < r));
+        }
+
+        function claimReward() {
+            if (currentRating < 5 || document.getElementById('ss-input').files.length < 6) {
+                alert("Requirement Error: Must rate 5 stars and upload 6 screenshots!");
+                return;
+            }
+            balance += 5; reviews += 1; updateUI();
+            alert("Reward added: $5.00!");
+            tab('sec-home');
+        }
+
+        function updateUI() {
+            document.getElementById('bal-top').innerText = balance.toFixed(2);
+            document.getElementById('bal-main').innerText = balance.toFixed(2);
+            document.getElementById('review-count').innerText = reviews;
+        }
+
+        function copyRef() {
+            const ref = document.getElementById('ref-link');
+            ref.select();
+            navigator.clipboard.writeText(ref.value);
+            alert("Link Copied!");
+        }
+
+        function submitContact() { alert("Ticket Created! Support will contact you."); tab('sec-home'); }
+        function logout() { nav('page-landing'); }
+    </script>
+</body>
+</html>
